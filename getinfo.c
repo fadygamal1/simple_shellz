@@ -1,24 +1,22 @@
 #include "shell.h"
 
 /**
- * clear_info - intializes info_t struct
+ * clear_info - initializes info_t struct
  * @info: struct address
  */
-
 void clear_info(info_t *info)
 {
 	info->arg = NULL;
 	info->argv = NULL;
 	info->path = NULL;
-	INFO->argc = 0;
+	info->argc = 0;
 }
 
 /**
- * set_info - intializes info_t struct
+ * set_info - initializes info_t struct
  * @info: struct address
  * @av: argument vector
  */
-
 void set_info(info_t *info, char **av)
 {
 	int i = 0;
@@ -27,8 +25,9 @@ void set_info(info_t *info, char **av)
 	if (info->arg)
 	{
 		info->argv = strtow(info->arg, " \t");
-		if (info->argv)
+		if (!info->argv)
 		{
+
 			info->argv = malloc(sizeof(char *) * 2);
 			if (info->argv)
 			{
@@ -46,11 +45,10 @@ void set_info(info_t *info, char **av)
 }
 
 /**
- * free_info - frees info_t struct fields)
+ * free_info - frees info_t struct fields
  * @info: struct address
  * @all: true if freeing all fields
  */
-
 void free_info(info_t *info, int all)
 {
 	ffree(info->argv);
@@ -71,6 +69,6 @@ void free_info(info_t *info, int all)
 		bfree((void **)info->cmd_buf);
 		if (info->readfd > 2)
 			close(info->readfd);
-		_putchar (BUF_FLUSH);
+		_putchar(BUF_FLUSH);
 	}
 }
