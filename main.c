@@ -1,23 +1,20 @@
 #include "shell.h"
-
 /**
- * main - entry point
- * @ac: arg count
- * @av: arg vector
- *
- * Return: 0 on success, 1 on error
+ * main - entry poin
+ * @argc: count
+ * @av: vector
+ * Return: 0
  */
-int main(int ac, char **av)
+int main(int argc, char **av)
 {
-	info_t info[] = { INFO_INIT };
+	inf_t in[] = { INF_INIT };
 	int fd = 2;
 
-	asm ("mov %1, %0\n\t"
-		"add $3, %0"
-		: "=r" (fd)
-		: "r" (fd));
-
-	if (ac == 2)
+	asm("mov %1, %0\n\t"
+			"add $3, %0"
+			: "=r" (fd)
+			: "r" (fd));
+	if (argc == 2)
 	{
 		fd = open(av[1], O_RDONLY);
 		if (fd == -1)
@@ -35,10 +32,11 @@ int main(int ac, char **av)
 			}
 			return (EXIT_FAILURE);
 		}
-		info->readfd = fd;
+		in->rfd = fd;
 	}
-	populate_env_list(info);
-	read_history(info);
-	hsh(info, av);
+	populate_env_list(in);
+	r_hist(in);
+	shell(in, av);
 	return (EXIT_SUCCESS);
 }
+
